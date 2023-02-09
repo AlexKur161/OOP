@@ -4,6 +4,7 @@ export default class Slider {
         this.slides = this.page.children
         this.btns = document.querySelectorAll(btns)
         this.ascentSlide = document.querySelector(page)
+        this.modulesSection = document.querySelector('.modules')
         this.indexPage = 1
     }
     
@@ -13,14 +14,22 @@ export default class Slider {
         }else if(i < 1) {
             this.indexPage = this.slides.length
         }
-        this.slides.forEach(slide => {
+        this.slides.forEach((slide,index) => {
             slide.style.display = 'none'
         });
+        let sectionSlides = Array.from(this.slides)
+        let show = sectionSlides.findIndex( sl => sl == this.modulesSection )
+        if(show === this.indexPage){
+                const modalOpen = document.querySelector('.hanson')
+                setTimeout(() => {
+                    modalOpen.style.display = 'block'
+                },3000);
+            }
         this.slides[this.indexPage - 1].style.display = 'block'
     }
 
     plusSlide(i){
-        this.slideIndex(this.indexPage += 1)
+        this.slideIndex(this.indexPage += i)
     }
 
     render() {
