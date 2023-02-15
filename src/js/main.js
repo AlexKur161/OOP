@@ -1,6 +1,7 @@
 import MainSlider from './modules/slider/mainSlider.js'
 import MiniSlider from './modules/slider/miniSlider.js'
 import StartVideo from './modules/playVideo.js'
+import Difference from './modules/difference.js'
 
 window.addEventListener('DOMContentLoaded', () => {
     const slider = new MainSlider({container: '.page', btns: '.next'})
@@ -32,4 +33,10 @@ window.addEventListener('DOMContentLoaded', () => {
         activeClass : 'feed__item-active'
     })
     feedSlider.render()
+    const dif = new Difference({
+        items: '.officer__card-item',
+        oldEducation: '.officerold',
+        newEducation: '.officernew'
+    })
+    dif.init()
 })

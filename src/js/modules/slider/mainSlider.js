@@ -30,19 +30,21 @@ export default class MainSlider extends Slider {
     }
 
     render() {
-        this.btns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                this.plusSlide(1)
-            })
-        });
-        const logoClick = document.querySelectorAll('.slide-logo')
-        logoClick.forEach(logo => {
-            logo.addEventListener('click', (e) => {
-                e.preventDefault()
-                this.indexPage = 1
-                this.slideIndex(this.indexPage)
-            })
-        });
-        this.slideIndex(this.indexPage)
+        try {
+            this.btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    this.plusSlide(1)
+                })
+            });
+            const logoClick = document.querySelectorAll('.slide-logo')
+            logoClick.forEach(logo => {
+                logo.addEventListener('click', (e) => {
+                    e.preventDefault()
+                    this.indexPage = 1
+                    this.slideIndex(this.indexPage)
+                })
+            });
+            this.slideIndex(this.indexPage)
+        }catch(e){}
     }
 }

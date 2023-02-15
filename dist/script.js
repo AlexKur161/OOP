@@ -3152,6 +3152,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_slider_mainSlider_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/slider/mainSlider.js */ "./src/js/modules/slider/mainSlider.js");
 /* harmony import */ var _modules_slider_miniSlider_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/slider/miniSlider.js */ "./src/js/modules/slider/miniSlider.js");
 /* harmony import */ var _modules_playVideo_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/playVideo.js */ "./src/js/modules/playVideo.js");
+/* harmony import */ var _modules_difference_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/difference.js */ "./src/js/modules/difference.js");
+
 
 
 
@@ -3188,7 +3190,93 @@ window.addEventListener('DOMContentLoaded', function () {
     activeClass: 'feed__item-active'
   });
   feedSlider.render();
+  var dif = new _modules_difference_js__WEBPACK_IMPORTED_MODULE_3__["default"]({
+    items: '.officer__card-item',
+    oldEducation: '.officerold',
+    newEducation: '.officernew'
+  });
+  dif.init();
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/difference.js":
+/*!**************************************!*\
+  !*** ./src/js/modules/difference.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Difference; });
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Difference =
+/*#__PURE__*/
+function () {
+  function Difference(_ref) {
+    var oldEducation = _ref.oldEducation,
+        newEducation = _ref.newEducation,
+        items = _ref.items;
+
+    _classCallCheck(this, Difference);
+
+    this.oldEducation = document.querySelector(oldEducation);
+    this.newEducation = document.querySelector(newEducation);
+    this.items = items;
+    this.oldItems = this.oldEducation.querySelectorAll(this.items);
+    this.newItems = this.newEducation.querySelectorAll(this.items);
+    this.oldCounter = 0;
+    this.newCounter = 0;
+  }
+
+  _createClass(Difference, [{
+    key: "bindTrigger",
+    value: function bindTrigger(btnItem, plusItem, counter) {
+      this.btnPlus = btnItem.querySelector('.plus');
+      this.btnPlus.addEventListener('click', function () {
+        if (counter !== plusItem.length - 2) {
+          plusItem[counter].style.display = 'flex';
+          counter++;
+        } else {
+          plusItem[counter].style.display = 'flex';
+          counter++;
+          plusItem[plusItem.length - 1].remove();
+        }
+      });
+    }
+  }, {
+    key: "hideItem",
+    value: function hideItem(items) {
+      items.forEach(function (item, i, arr) {
+        if (i !== arr.length - 1) {
+          item.style.display = 'none';
+        }
+      });
+    }
+  }, {
+    key: "init",
+    value: function init() {
+      this.hideItem(this.oldItems);
+      this.hideItem(this.newItems);
+      this.bindTrigger(this.oldEducation, this.oldItems, this.oldCounter);
+      this.bindTrigger(this.newEducation, this.newItems, this.newCounter);
+    }
+  }]);
+
+  return Difference;
+}();
+
+
 
 /***/ }),
 
@@ -3306,7 +3394,11 @@ var Slider = function Slider() {
   _classCallCheck(this, Slider);
 
   this.container = document.querySelector(container);
-  this.slides = this.container.children;
+
+  try {
+    this.slides = this.container.children;
+  } catch (e) {}
+
   this.btns = document.querySelectorAll(btns);
   this.modulesSection = document.querySelector('.modules');
   this.next = document.querySelector(next);
@@ -3435,21 +3527,23 @@ function (_Slider) {
     value: function render() {
       var _this2 = this;
 
-      this.btns.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          _this2.plusSlide(1);
+      try {
+        this.btns.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            _this2.plusSlide(1);
+          });
         });
-      });
-      var logoClick = document.querySelectorAll('.slide-logo');
-      logoClick.forEach(function (logo) {
-        logo.addEventListener('click', function (e) {
-          e.preventDefault();
-          _this2.indexPage = 1;
+        var logoClick = document.querySelectorAll('.slide-logo');
+        logoClick.forEach(function (logo) {
+          logo.addEventListener('click', function (e) {
+            e.preventDefault();
+            _this2.indexPage = 1;
 
-          _this2.slideIndex(_this2.indexPage);
+            _this2.slideIndex(_this2.indexPage);
+          });
         });
-      });
-      this.slideIndex(this.indexPage);
+        this.slideIndex(this.indexPage);
+      } catch (e) {}
     }
   }]);
 
